@@ -5,6 +5,15 @@ class TicTacToe:
     def __init__(self, root):
         self.root = root
         self.root.title("Tic Tac Toe")
+
+        # Center the window
+        window_width = 400
+        window_height = 500
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x = int((screen_width/2) - (window_width/2))
+        y = int((screen_height/2) - (window_height/2))
+        self.root.geometry(f"{window_width}x{window_height}+{x}+{y}")
         
         self.current_player = "X"
         self.board = [[" " for _ in range(3)] for _ in range(3)]
@@ -35,7 +44,7 @@ class TicTacToe:
     def on_button_click(self, row, col):
         if self.board[row][col] == " ":
             self.board[row][col] = self.current_player
-            self.buttons[row][col].config(text=self.current_player)
+            self.buttons[row][col].config(text=self.current_player,fg="blue" if self.current_player == "X" else "red")
             if self.check_winner(self.current_player):
                 messagebox.showinfo("Tic Tac Toe", f"Player {self.current_player} wins!")
                 self.reset_board()
@@ -73,5 +82,6 @@ class TicTacToe:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.resizable(False, False)  # Prevent window from being resized
     game = TicTacToe(root)
     root.mainloop()
